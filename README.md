@@ -32,7 +32,7 @@ Example:
 ```bash
 bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>"
 ```
-
+<img src=https://github.com/un9nplayer/AutoRecon-XSS/blob/main/image.png width=1000>
 ## Contact
 
 You can reach out to the author via the following channels:
