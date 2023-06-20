@@ -21,10 +21,17 @@ cd AutoRecon-XSS
 chmod +x AutoRecon-XSS.sh
 ```
 ## External tools
+
+- [Subfinder](https://github.com/projectdiscovery/subfinder)
+- [httpx](https://github.com/projectdiscovery/httpx)
+- [qsreplace](https://github.com/tomnomnom/qsreplace)
+
+Installation:
+
 ```bash
-subfinder
-httpx
-qsreplace
+subfinder: go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+httpx : go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+qsreplace: go install github.com/tomnomnom/qsreplace@latest
 ```
 ## Usage
 
@@ -38,6 +45,7 @@ Example:
 bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>"
 ```
 <img src=https://github.com/un9nplayer/AutoRecon-XSS/blob/main/image.png width=1000>
+
 ## Contact
 
 You can reach out to the author via the following channels:
