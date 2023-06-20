@@ -24,6 +24,7 @@ chmod +x AutoRecon-XSS.sh
 - [Subfinder](https://github.com/projectdiscovery/subfinder)
 - [httpx](https://github.com/projectdiscovery/httpx)
 - [qsreplace](https://github.com/tomnomnom/qsreplace)
+- [waybackurls](https://github.com/tomnomnom/waybackurls)
 
 Installation:
 
@@ -31,6 +32,7 @@ Installation:
 subfinder: go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 httpx : go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 qsreplace: go install github.com/tomnomnom/qsreplace@latest
+waybackurls: go install github.com/tomnomnom/waybackurls@latest
 ```
 ## Usage
 
