@@ -7,7 +7,7 @@ AutoRecon-XSS is a script designed for automated reconnaissance of XSS vulnerabi
 ## Table of Contents
 
 - [Installation](#installation)
-- [External tools](#external_tools)
+- [External-tools](#external-tools)
 - [Usage](#usage)
 - [Contact](#contact)
 - [Disclaimer](#disclaimer)
@@ -19,7 +19,7 @@ git clone https://github.com/un9nplayer/AutoRecon-XSS.git
 cd AutoRecon-XSS
 chmod +x AutoRecon-XSS.sh
 ```
-## External tools
+## External-tools
 
 - [Subfinder](https://github.com/projectdiscovery/subfinder)
 - [httpx](https://github.com/projectdiscovery/httpx)
