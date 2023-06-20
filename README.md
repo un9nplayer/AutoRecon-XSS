@@ -1,7 +1,5 @@
 # AutoRecon-XSS
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
 ## Description
 
 AutoRecon-XSS is a script designed for automated reconnaissance of XSS vulnerabilities. It crawls the target URL or alive domains, extracts potential vulnerable URLs, and checks them for XSS vulnerabilities.
