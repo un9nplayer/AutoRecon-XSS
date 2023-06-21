@@ -9,6 +9,7 @@ AutoRecon-XSS is a script designed for automated reconnaissance of XSS vulnerabi
 - [Installation](#installation)
 - [External-tools](#external-tools)
 - [Usage](#usage)
+- [What New](#what-new)
 - [Contact](#contact)
 - [Disclaimer](#disclaimer)
 
@@ -25,6 +26,7 @@ chmod +x AutoRecon-XSS.sh
 - [httpx](https://github.com/projectdiscovery/httpx)
 - [qsreplace](https://github.com/tomnomnom/qsreplace)
 - [waybackurls](https://github.com/tomnomnom/waybackurls)
+- [dalfox](https://github.com/hahwul/dalfox)
 
 Installation:
 
@@ -33,6 +35,7 @@ subfinder: go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@
 httpx : go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 qsreplace: go install github.com/tomnomnom/qsreplace@latest
 waybackurls: go install github.com/tomnomnom/waybackurls@latest
+dalfox: go install github.com/hahwul/dalfox/v2@latest
 ```
 ## Usage
 
@@ -46,6 +49,12 @@ Example:
 bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>"
 ```
 <img src=https://github.com/un9nplayer/AutoRecon-XSS/blob/main/image.png width=1000>
+
+## What-New
+- Implemented DalFox to perform a scan on a URL
+- Run DalFox scan on vulnerable URLs: Runs DalFox scan on vulnerable URLs if a specific file exists.
+- Print vulnerability check completion message: Displays a completion message for the vulnerability check.
+- Check and display the results: Check and displays the results of the vulnerability check.
 
 ## Contact
 
