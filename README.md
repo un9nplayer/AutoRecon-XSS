@@ -2,7 +2,7 @@
 
 ## Description
 
-AutoRecon-XSS is a script designed for automated reconnaissance of XSS vulnerabilities. It crawls the target URL or alive domains, extracts potential vulnerable URLs, and checks them for XSS vulnerabilities.
+AutoRecon-XSS is a script designed for automated reconnaissance of XSS vulnerabilities. It crawls the target URL or alive domains, extracts potentially vulnerable URLs, and checks them for XSS vulnerabilities.
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>
 <img src=https://github.com/un9nplayer/AutoRecon-XSS/blob/main/image.png width=1000>
 
 ## What-New
-- Implemented DalFox to perform a scan on a URL
+- Implemented DalFox to perform a scan on a URL and that will give you 99% positive results.
 - Run DalFox scan on vulnerable URLs: Runs DalFox scan on vulnerable URLs if a specific file exists.
 - Print vulnerability check completion message: Displays a completion message for the vulnerability check.
 - Check and display the results: Check and displays the results of the vulnerability check.
