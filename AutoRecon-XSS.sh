@@ -72,6 +72,15 @@ if [[ -f "${VULNERABLE_URLS_FILE}" ]]; then
     if [[ "$check_xss_from_file" == "Y" || "$check_xss_from_file" == "y" ]]; then
         print_color_text "\e[1;36m" "Checking vulnerable URLs for XSS..."
 
+        # URL-decode the file content and save it back
+        temp_file="${VULNERABLE_URLS_FILE}.tmp"
+        while IFS= read -r url; do
+            decoded_url=$(echo -n "$url" | sed 's/+/ /g;s/%\(..\)/\\x\1/g;')
+            echo -e "${decoded_url}" >> "${temp_file}"
+        done < "${VULNERABLE_URLS_FILE}"
+
+        mv "${temp_file}" "${VULNERABLE_URLS_FILE}"
+
 # Array to store processed URLs
 processed_urls=()
 
@@ -113,7 +122,7 @@ processed_urls=()
         fi
     fi
 fi
-
+exit 0
 
 
 # Create output directory if it doesn't exist
@@ -121,7 +130,7 @@ mkdir -p "${OUTPUT_DIR}"
 
 # Check if subfinder is to be used
 if [[ ! -z "$target" ]]; then
-    read -p $'\e[1;36mDo you want to check for subdomains? (Y/N): \e[0m' check_subdomains
+    read -p $'\e[1;36mDo you want to check for subdomains? (Y/N):  ' check_subdomains
     if [[ "$check_subdomains" == "y" ]]; then
         print_color_text "\e[1;36m" "SubDomains finding start. Please wait!"
         subdomains=$(subfinder -d "$target" --silent)
@@ -156,7 +165,7 @@ perform_waybackurls() {
 
 
 # Check if the user wants to perform waybackurls on the given target URL or the alive domains
-read -p $'\e[1;36mDo you want to perform waybackurls on the target URL or on the alive domains? (target/alive): \e[0m' wayback_option
+read -p $'\e[1;36mDo you want to perform waybackurls on the target URL or on the alive domains? (target/alive):  ' wayback_option
 
 if [[ "${wayback_option}" == "target" ]]; then
     # Perform waybackurls on the given target URL
@@ -185,6 +194,15 @@ mv "${merged_file}" "${FINAL_URLS_FILE}"
 
 # Remove individual crawled files
 rm "${OUTPUT_DIR}/wayback_"*"_$(date +%Y).txt"
+
+# URL-decode the file content and save it back
+temp_file="${VULNERABLE_URLS_FILE}.tmp"
+while IFS= read -r url; do
+        decoded_url=$(echo -n "$url" | sed 's/+/ /g;s/%\(..\)/\\x\1/g;')
+        echo -e "${decoded_url}" >> "${temp_file}"
+done < "${VULNERABLE_URLS_FILE}"
+
+mv "${temp_file}" "${VULNERABLE_URLS_FILE}"
 
 print_color_text "\e[1;36m" "Wayback Machine crawling process completed."
 print_color_text "\e[1;33m" "Unique URLs saved as ${FINAL_URLS_FILE}."
