@@ -75,44 +75,45 @@ if [[ -f "${VULNERABLE_URLS_FILE}" ]]; then
 # Array to store processed URLs
 processed_urls=()
 
-    # Replace payload in URLs and filter vulnerable URLs
-    while IFS= read -r url; do
-      vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
-      if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
-        processed_urls+=("${vulnerable_url}")
-        response=$(curl -s -L "${vulnerable_url}")
-        if [[ "${response}" == *"${xss_payload}"* ]]; then
-          echo -e "${url}" >> "${XSS_VULNERABLE_URLS_FILE}"
-          echo -e "\e[1;91m${url}\e[0m"
+        # Replace payload in URLs and filter vulnerable URLs
+        while IFS= read -r url; do
+            vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
+            if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
+                processed_urls+=("${vulnerable_url}")
+                response=$(curl -s -L "${vulnerable_url}")
+                if [[ "${response}" == *"${xss_payload}"* ]]; then
+                    echo -e "${url}" >> "${XSS_VULNERABLE_URLS_FILE}"
+                    echo -e "\e[1;91m${url}\e[0m"
+                fi
+            fi
+        done < "${VULNERABLE_URLS_FILE}"
+
+        # Remove unwanted substrings from the file
+        grep -o 'http[s]\?://[^[:space:]]\+' "${XSS_VULNERABLE_URLS_FILE}" > "${XSSV_CONFIRM}"
+
+        # Function to perform DalFox scan on a URL
+        perform_dalfox_scan() {
+            local url="$1"
+            dalfox file "${url}" --silence --no-spinner --only-poc='v' -o "${XSSV_CONFIRM_URLS}"
+        }
+
+        # Run DalFox scan on vulnerable URLs
+        if [[ -f "${XSSV_CONFIRM}" ]]; then
+            print_color_text "\e[1;36m" "Running DalFox scan on vulnerable URLs..."
+            perform_dalfox_scan "${XSSV_CONFIRM}"
+            print_color_text "\e[1;36m" "DalFox scan completed."
         fi
-      fi
-    done < "${VULNERABLE_URLS_FILE}"
 
-    # Remove unwanted substrings from the file
-    grep -o 'http[s]\?://[^[:space:]]\+' "${XSS_VULNERABLE_URLS_FILE}" > "${XSSV_CONFIRM}"
+        print_color_text "\e[1;33m" "Vulnerability check completed."
 
-    # Function to perform DalFox scan on a URL
-    perform_dalfox_scan() {
-      local url="$1"
-      dalfox file "${url}" --silence --no-spinner --only-poc='v' -o "${XSSV_CONFIRM_URLS}"
-    }
-
-    # Run DalFox scan on vulnerable URLs
-    if [[ -f "${XSSV_CONFIRM}" ]]; then
-      print_color_text "\e[1;36m" "Running DalFox scan on vulnerable URLs..."
-      perform_dalfox_scan "${XSSV_CONFIRM}"
-      print_color_text "\e[1;36m" "DalFox scan completed."
+        if [[ -s "${XSSV_CONFIRM_URLS}" ]]; then
+            print_color_text "\e[1;33m" "XSS Vulnerable URLs saved as ${XSSV_CONFIRM_URLS}."
+        else
+            print_color_text "\e[1;33m" "No XSS Vulnerable URLs found."
+        fi
     fi
-
-    print_color_text "\e[1;33m" "Vulnerability check completed."
-
-    if [[ -s "${XSSV_CONFIRM_URLS}" ]]; then
-      print_color_text "\e[1;33m" "XSS Vulnerable URLs saved as ${XSSV_CONFIRM_URLS}."
-    else
-      print_color_text "\e[1;33m" "No XSS Vulnerable URLs found."
-    fi
-  fi
 fi
+
 
 
 # Create output directory if it doesn't exist
@@ -232,5 +233,4 @@ if [[ -s "${XSSV_CONFIRM_URLS}" ]]; then
     print_color_text "\e[1;33m" "XSS Vulnerable URLs saved as ${XSSV_CONFIRM_URLS}."
 else
     print_color_text "\e[1;33m" "No XSS Vulnerable URLs found."
-fi
 fi
