@@ -122,7 +122,6 @@ processed_urls=()
         fi
     fi
 fi
-exit 0
 
 
 # Create output directory if it doesn't exist
