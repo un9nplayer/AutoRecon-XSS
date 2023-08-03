@@ -59,7 +59,15 @@ bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>
 - Run DalFox scan on vulnerable URLs: Runs DalFox scan on vulnerable URLs if a specific file exists.
 - Print vulnerability check completion message: Displays a completion message for the vulnerability check.
 - Check and display the results: Check and displays the results of the vulnerability check.
-- Start where you left.
+- Start where you left off.
+
+This will display all new support tools.
+
+| New Update              | Description                                        |
+|-------------------------|----------------------------------------------------|
+| `Notify`                | Directly send the data to Discord webhook.         |
+| `Dalfox`		            | Scan vulnerable urls to check the confirmed XSS.   | 
+
 
 ## Contact
 
