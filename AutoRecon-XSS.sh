@@ -127,6 +127,9 @@ fi
 # Create output directory if it doesn't exist
 mkdir -p "${OUTPUT_DIR}"
 
+# File input for discord
+echo "## Subdomains.txt file data" > ${SUBDOMAINS_FILE}
+
 # Check if subfinder is to be used
 if [[ ! -z "$target" ]]; then
     read -p $'\e[1;36mDo you want to check for subdomains? (Y/N):  ' check_subdomains
@@ -134,7 +137,7 @@ if [[ ! -z "$target" ]]; then
         print_color_text "\e[1;36m" "SubDomains finding start. Please wait!"
         subdomains=$(subfinder -d "$target" --silent)
         if [[ -n "$subdomains" ]]; then
-            echo "$subdomains" > "${SUBDOMAINS_FILE}"
+            echo "$subdomains" >> "${SUBDOMAINS_FILE}"
             print_color_text "\e[1;36m" "Done, all alive SubDomains saved!"
         else
             print_color_text "\e[1;36m" "No subdomains found."
@@ -145,12 +148,21 @@ if [[ ! -z "$target" ]]; then
     fi
 fi
 
+# Notify to discord
+notify --silent -data ${SUBDOMAINS_FILE} -bulk >/dev/null 2>&1
+
+# File input for discord
+echo "## AliveDomain.txt file data" > ${ALIVE_DOMAINS_FILE}
+
 # Save alive domains from subdomains file
 if [[ -f "${SUBDOMAINS_FILE}" ]]; then
     print_color_text "\e[1;36m" "Finding alive domains from subdomains file."
-    httpx -l "${SUBDOMAINS_FILE}" -mc 200,301,403,401,404 -silent > "${ALIVE_DOMAINS_FILE}"
+    httpx -l "${SUBDOMAINS_FILE}" -mc 200,301,403,401,404 -silent >> "${ALIVE_DOMAINS_FILE}"
     print_color_text "\e[1;36m" "Alive domains saved as ${ALIVE_DOMAINS_FILE}."
 fi
+
+# Notify to discord
+notify --silent -data ${ALIVE_DOMAINS_FILE} -bulk >/dev/null 2>&1
 
 print_color_text "\e[1;36m" "Wayback Machine crawling process started."
 sleep 2
@@ -231,6 +243,9 @@ done < "${VULNERABLE_URLS_FILE}"
 # Remove unwanted substrings from the file
 grep -o 'http[s]\?://[^[:space:]]\+' "${XSS_VULNERABLE_URLS_FILE}" > "${XSSV_CONFIRM}"
 
+# File input for discord
+echo "## XSSV_CONFIRM_URLS.txt file data" > ${XSSV_CONFIRM_URLS}
+
 # Function to perform DalFox scan on a URL
 perform_dalfox_scan() {
     local url="$1"
@@ -244,6 +259,10 @@ if [[ -f "${XSSV_CONFIRM}" ]]; then
     print_color_text "\e[1;36m" "DalFox scan completed."
 fi
 
+
+# Notify to discord
+notify --silent -data ${XSSV_CONFIRM_URLS} -bulk >/dev/null 2>&1
+
 print_color_text "\e[1;33m" "Vulnerability check completed."
 
 if [[ -s "${XSSV_CONFIRM_URLS}" ]]; then
@@ -251,3 +270,4 @@ if [[ -s "${XSSV_CONFIRM_URLS}" ]]; then
 else
     print_color_text "\e[1;33m" "No XSS Vulnerable URLs found."
 fi
+
