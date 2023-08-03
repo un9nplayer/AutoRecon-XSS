@@ -20,6 +20,7 @@ git clone https://github.com/un9nplayer/AutoRecon-XSS.git
 cd AutoRecon-XSS
 chmod +x AutoRecon-XSS.sh
 ```
+
 ## External-tools
 
 - [Subfinder](https://github.com/projectdiscovery/subfinder)
