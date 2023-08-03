@@ -40,7 +40,6 @@ target="$1"
 start_year="$2"
 xss_payload="$3"
 
-
 # Check if the target URL is alive and returns status 200 OK using curl
 if ! status_code=$(curl -Is -w "%{http_code}" -A "Chrome" -L "${target}" -o /dev/null); then
     print_color_text "\e[1;31m" "Error: The target URL did not return status code 200 OK."
