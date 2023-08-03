@@ -15,7 +15,7 @@ AutoRecon-XSS is a script designed for automated reconnaissance of XSS vulnerabi
 
 ## Installation
 
-```bash
+```sh
 git clone https://github.com/un9nplayer/AutoRecon-XSS.git
 cd AutoRecon-XSS
 chmod +x AutoRecon-XSS.sh
@@ -30,7 +30,7 @@ chmod +x AutoRecon-XSS.sh
 
 Installation:
 
-```bash
+```sh
 subfinder: go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 httpx : go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 qsreplace: go install github.com/tomnomnom/qsreplace@latest
@@ -39,13 +39,13 @@ dalfox: go install github.com/hahwul/dalfox/v2@latest
 ```
 ## Usage
 
-```bash
+```sh
 bash AutoRecon-XSS.sh <Target-URL> <Url-Recon-Year> <"XSS-Payload-you-wanna-Test">
 ```
 
 Example:
 
-```bash
+```sh
 bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>"
 ```
 <img src=https://github.com/un9nplayer/AutoRecon-XSS/blob/main/image.png width=1000>
