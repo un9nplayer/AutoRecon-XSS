@@ -27,6 +27,7 @@ chmod +x AutoRecon-XSS.sh
 - [qsreplace](https://github.com/tomnomnom/qsreplace)
 - [waybackurls](https://github.com/tomnomnom/waybackurls)
 - [dalfox](https://github.com/hahwul/dalfox)
+- [notify](https://github.com/projectdiscovery/notify)
 
 Installation:
 
@@ -36,6 +37,7 @@ httpx : go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 qsreplace: go install github.com/tomnomnom/qsreplace@latest
 waybackurls: go install github.com/tomnomnom/waybackurls@latest
 dalfox: go install github.com/hahwul/dalfox/v2@latest
+notify: go install -v github.com/projectdiscovery/notify/cmd/notify@latest
 ```
 ## Usage
 
@@ -60,6 +62,7 @@ bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>
 - Print vulnerability check completion message: Displays a completion message for the vulnerability check.
 - Check and display the results: Check and displays the results of the vulnerability check.
 - Start where you left off.
+- Notify: The tool tries to use the default provider config ($HOME/.config/notify/provider-config.yaml), it can also be specified via CLI by using the provider-config flag.
 
 This will display all new support tools.
 
