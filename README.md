@@ -48,9 +48,11 @@ Example:
 ```sh
 bash AutoRecon-XSS.sh http://testphp.vulnweb.com 2000 "<script>alert(1)</script>"
 ```
+<p align="center">
 <img src=https://github.com/un9nplayer/AutoRecon-XSS/blob/main/image.png width=1000>
 <img src=https://raw.githubusercontent.com/un9nplayer/AutoRecon-XSS/main/new.png width=1000>
 <img src=https://raw.githubusercontent.com/un9nplayer/AutoRecon-XSS/main/XSS.png width=1000>
+</p>
 
 ## What-New
 - Implemented DalFox to perform a scan on a URL and that will give you 99% positive results.
