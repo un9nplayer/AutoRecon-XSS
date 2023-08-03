@@ -69,3 +69,5 @@ You can reach out to the author via the following channels:
 ## Disclaimer
 
 Please use AutoRecon-XSS responsibly and only for ethical purposes. Always adhere to legal and ethical standards when conducting security assessments or vulnerability scanning. The author and contributors of AutoRecon-XSS are not responsible for any misuse or illegal activities conducted with this tool.
+
+AutoRecon-XSS is made with 🖤 by the un9nplayer.
