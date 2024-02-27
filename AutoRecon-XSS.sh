@@ -85,6 +85,8 @@ processed_urls=()
 
 # Replace payload in URLs and filter vulnerable URLs
 while IFS= read -r url; do
+    # Remove null bytes from the URL
+    url=$(echo "${url}" | tr -d '\0')
     vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
     if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
         processed_urls+=("${vulnerable_url}")
@@ -202,14 +204,13 @@ grep -E '[=&?@#]' "${merged_file}" | gf xss -t 10s | sed -E 's/[=&?@#].*//' | so
 # Save the unique URLs as finalUrls.txt
 mv "${merged_file}" "${FINAL_URLS_FILE}"
 
-# Remove individual crawled files
-rm "${OUTPUT_DIR}/wayback_"*"_$(date +%Y).txt"
-
 # URL-decode the file content and save it back
 temp_file="${VULNERABLE_URLS_FILE}.tmp"
 while IFS= read -r url; do
-        decoded_url=$(echo -n "$url" | sed 's/+/ /g;s/%\(..\)/\\x\1/g;')
-        echo -e "${decoded_url}" >> "${temp_file}"
+    # Remove null bytes from the URL
+    url=$(echo "${url}" | tr -d '\0')
+    decoded_url=$(printf '%b' "${url//%/\\x}")
+    echo "${decoded_url}" >> "${temp_file}"
 done < "${VULNERABLE_URLS_FILE}"
 
 mv "${temp_file}" "${VULNERABLE_URLS_FILE}"
@@ -228,6 +229,8 @@ processed_urls=()
 
 # Replace payload in URLs and filter vulnerable URLs
 while IFS= read -r url; do
+    # Remove null bytes from the URL
+    url=$(echo "${url}" | tr -d '\0')
     vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
     if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
         processed_urls+=("${vulnerable_url}")
