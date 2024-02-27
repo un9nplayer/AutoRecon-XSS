@@ -197,7 +197,7 @@ cat "${OUTPUT_DIR}/wayback_"*"_$(date +%Y).txt" | sort -u > "${merged_file}"
 grep -E '\.js(\?|$)' "${merged_file}" > "${JS_URLS_FILE}"
 
 # Extract URLs containing "=, ?, @, #, &"
-cat "${merged_file}" | gf xss -t 10s | sed 's/.*=//' | sort -u | grep -E '[=&?@#]' > "${VULNERABLE_URLS_FILE}"
+grep -E '[=&?@#]' "${merged_file}" | gf xss -t 10s | sed -E 's/[=&?@#].*//' | sort -u > "${VULNERABLE_URLS_FILE}"
 
 # Save the unique URLs as finalUrls.txt
 mv "${merged_file}" "${FINAL_URLS_FILE}"
