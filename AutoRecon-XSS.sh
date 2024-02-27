@@ -40,14 +40,15 @@ target="$1"
 start_year="$2"
 xss_payload="$3"
 
-# Check if the target URL is alive and returns status 200 OK using curl
+# Check if the target URL is alive using curl
 if ! status_code=$(curl -Is -w "%{http_code}" -A "Chrome" -L "${target}" -o /dev/null); then
-    print_color_text "\e[1;31m" "Error: The target URL did not return status code 200 OK."
+    print_color_text "\e[1;31m" "Error: Unable to connect to the target URL."
     exit 1
 fi
 
-if [[ "${status_code}" != "200" ]]; then
-    print_color_text "\e[1;31m" "Error: The target URL did not return status code 200 OK."
+# Check if the status code indicates a successful connection (any 2xx, 3xx, 4xx, or 5xx status code)
+if [[ ! "${status_code}" =~ ^[2345] ]]; then
+    print_color_text "\e[1;31m" "Error: The target URL did not return a successful status code."
     exit 1
 fi
 
