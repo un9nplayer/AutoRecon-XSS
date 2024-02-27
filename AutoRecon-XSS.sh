@@ -85,8 +85,6 @@ processed_urls=()
 
 # Replace payload in URLs and filter vulnerable URLs
 while IFS= read -r url; do
-    # Remove null bytes from the URL
-    url=$(echo "${url}" | tr -d '\0')
     vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
     if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
         processed_urls+=("${vulnerable_url}")
@@ -229,8 +227,6 @@ processed_urls=()
 
 # Replace payload in URLs and filter vulnerable URLs
 while IFS= read -r url; do
-    # Remove null bytes from the URL
-    url=$(echo "${url}" | tr -d '\0')
     vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
     if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
         processed_urls+=("${vulnerable_url}")
