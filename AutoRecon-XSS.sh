@@ -205,10 +205,8 @@ mv "${merged_file}" "${FINAL_URLS_FILE}"
 # URL-decode the file content and save it back
 temp_file="${VULNERABLE_URLS_FILE}.tmp"
 while IFS= read -r url; do
-    # Remove null bytes from the URL
-    url=$(echo "${url}" | tr -d '\0')
-    decoded_url=$(printf '%b' "${url//%/\\x}")
-    echo "${decoded_url}" >> "${temp_file}"
+        decoded_url=$(echo -n "$url" | sed 's/+/ /g;s/%\(..\)/\\x\1/g;')
+        echo -e "${decoded_url}" >> "${temp_file}"
 done < "${VULNERABLE_URLS_FILE}"
 
 mv "${temp_file}" "${VULNERABLE_URLS_FILE}"
