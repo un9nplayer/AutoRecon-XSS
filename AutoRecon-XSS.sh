@@ -83,18 +83,18 @@ if [[ -f "${VULNERABLE_URLS_FILE}" ]]; then
 # Array to store processed URLs
 processed_urls=()
 
-        # Replace payload in URLs and filter vulnerable URLs
-        while IFS= read -r url; do
-            vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
-            if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
-                processed_urls+=("${vulnerable_url}")
-                response=$(curl -s -L "${vulnerable_url}")
-                if [[ "${response}" == *"${xss_payload}"* ]]; then
-                    echo -e "${url}" >> "${XSS_VULNERABLE_URLS_FILE}"
-                    echo -e "\e[1;91m${url}\e[0m"
-                fi
-            fi
-        done < "${VULNERABLE_URLS_FILE}"
+# Replace payload in URLs and filter vulnerable URLs
+while IFS= read -r url; do
+    vulnerable_url=$(echo "${url}" | qsreplace "${xss_payload}")
+    if ! [[ "${processed_urls[*]}" =~ "${vulnerable_url}" ]]; then
+        processed_urls+=("${vulnerable_url}")
+        response=$(curl -s -L "${vulnerable_url}")
+        if [[ "${response}" == *"${xss_payload}"* ]]; then
+            echo -e "${url}" >> "${XSS_VULNERABLE_URLS_FILE}"
+            echo -e "\e[1;91m${url}\e[0m"
+        fi
+    fi
+done < "${VULNERABLE_URLS_FILE}"
 
         # Remove unwanted substrings from the file
         grep -o 'http[s]\?://[^[:space:]]\+' "${XSS_VULNERABLE_URLS_FILE}" > "${XSSV_CONFIRM}"
